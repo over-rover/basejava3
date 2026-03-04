@@ -1,6 +1,3 @@
-/**
- * Array based storage for Resumes
- */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
 
@@ -17,9 +14,6 @@ public class ArrayStorage {
     void delete(String uuid) {
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
     Resume[] getAll() {
         return new Resume[0];
     }
