@@ -16,34 +16,40 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(r.getUuid()))
-                storage[i] = r;
-        }
+        int index = getIndexIfExist(r.getUuid());
+        if (index >= 0)
+            storage[index] = r;
+        else
+            System.out.println("UPDATE ERROR: " + r.getUuid() + " не существует");
     }
 
     public void save(Resume r) {
-        storage[size] = r;
-        size++;
+        if (!isExist(r)) {
+            storage[size] = r;
+            size++;
+        } else
+            System.out.println("SAVE ERROR: " + r.getUuid() + " уже существует");
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid))
-                return storage[i];
+        int index = getIndexIfExist(uuid);
+        if (index >= 0)
+            return storage[index];
+        else {
+            System.out.println("GET ERROR: " + uuid + " не существует");
+            return null;
         }
-        return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-                break;
-            }
-        }
+        int index = getIndexIfExist(uuid);
+        if (index >= 0) {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+        } else
+            System.out.println("DELETE ERROR: " + uuid + " не существует");
+
     }
 
     public Resume[] getAll() {
@@ -52,5 +58,17 @@ public class ArrayStorage {
 
     public int size() {
         return size;
+    }
+
+    private int getIndexIfExist(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid()))
+                return i;
+        }
+        return -1;
+    }
+
+    private boolean isExist(Resume r) {
+        return getIndexIfExist(r.getUuid()) >= 0;
     }
 }
