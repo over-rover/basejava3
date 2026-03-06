@@ -24,6 +24,9 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
+        if (size == storage.length - 1)
+            System.out.println("SAVE ERROR: " + r.getUuid() + " хранилище переполнено]");
+
         if (!isExist(r)) {
             storage[size] = r;
             size++;
