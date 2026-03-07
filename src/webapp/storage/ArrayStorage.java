@@ -5,7 +5,8 @@ import webapp.model.Resume;
 import java.util.Arrays;
 
 public class ArrayStorage {
-    private final Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10_000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -14,28 +15,29 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        int index = getSearchKey(r.getUuid());
-        if (isExist(index))
+        int index = findIndex(r.getUuid());
+        if (index >= 0)
             storage[index] = r;
         else
             System.out.println("UPDATE ERROR: " + r.getUuid() + " не существует");
     }
 
     public void save(Resume r) {
-        if (size == storage.length - 1)
-            System.out.println("SAVE ERROR: " + r.getUuid() + " не добавлено. Хранилище заполнено");
+        String uuid = r.getUuid();
+        if (size >= STORAGE_LIMIT - 1)
+            System.out.println("SAVE ERROR: " + uuid + " не добавлено. Хранилище заполнено");
 
-        int index = getSearchKey(r.getUuid());
-        if (!isExist(index)) {
+        int index = findIndex(uuid);
+        if (index == -1) {
             storage[size] = r;
             size++;
         } else
-            System.out.println("SAVE ERROR: " + r.getUuid() + " уже существует");
+            System.out.println("SAVE ERROR: " + uuid + " уже существует");
     }
 
     public Resume get(String uuid) {
-        int index = getSearchKey(uuid);
-        if (isExist(index))
+        int index = findIndex(uuid);
+        if (index >= 0)
             return storage[index];
         else {
             System.out.println("GET ERROR: " + uuid + " не существует");
@@ -44,14 +46,13 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index = getSearchKey(uuid);
-        if (isExist(index)) {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
+        int index = findIndex(uuid);
+        if (index >= 0) {
             size--;
+            storage[index] = storage[size];
+            storage[size] = null;
         } else
             System.out.println("DELETE ERROR: " + uuid + " не существует");
-
     }
 
     public Resume[] getAll() {
@@ -62,15 +63,11 @@ public class ArrayStorage {
         return size;
     }
 
-    private int getSearchKey(String uuid) {
+    private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid()))
                 return i;
         }
         return -1;
-    }
-
-    private boolean isExist(int index) {
-        return index >= 0;
     }
 }
