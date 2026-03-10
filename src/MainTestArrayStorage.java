@@ -1,20 +1,22 @@
 import webapp.model.Resume;
 import webapp.storage.ArrayStorage;
+import webapp.storage.SortedArrayStorage;
 import webapp.storage.Storage;
 
 /**
  * Test for your webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private static final Storage ARRAY_STORAGE = new ArrayStorage();
+    //private static final Storage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
         r1.setUuid("uuid1");
         final Resume r2 = new Resume();
-        r2.setUuid("uuid2");
+        r2.setUuid("uuid3");
         final Resume r3 = new Resume();
-        r3.setUuid("uuid3");
+        r3.setUuid("uuid2");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
@@ -26,7 +28,7 @@ public class MainTestArrayStorage {
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         System.out.println("r1 before update: " + ARRAY_STORAGE.get(r1.getUuid()));
-        r1.setUuid("uuid_1");
+        r1.setUuid("uuid0");
         ARRAY_STORAGE.update(r1);
         System.out.println("r1 after update: " + ARRAY_STORAGE.get(r1.getUuid()));
 
