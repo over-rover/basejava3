@@ -27,7 +27,7 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void save(Resume r) {
         String uuid = r.getUuid();
-        if (size >= STORAGE_LIMIT - 1)
+        if (size >= STORAGE_LIMIT)
             System.out.println("SAVE ERROR: " + uuid + " не добавлено. Хранилище заполнено");
 
         int index = findIndex(uuid);
