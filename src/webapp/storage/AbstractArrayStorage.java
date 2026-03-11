@@ -55,6 +55,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             doDelete(index);
             size--;
+            storage[size] = null;
         } else
             System.out.println("DELETE ERROR: " + uuid + " не существует");
     }
