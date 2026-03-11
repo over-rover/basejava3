@@ -10,21 +10,6 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size = 0;
 
     @Override
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    @Override
-    public void update(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index >= 0)
-            storage[index] = r;
-        else
-            System.out.println("UPDATE ERROR: " + r.getUuid() + " не существует");
-    }
-
-    @Override
     public void save(Resume r) {
         String uuid = r.getUuid();
         if (size >= STORAGE_LIMIT)
@@ -50,6 +35,20 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
+    public Resume[] getAll() {
+        return Arrays.copyOf(storage, size);
+    }
+
+    @Override
+    public void update(Resume r) {
+        int index = findIndex(r.getUuid());
+        if (index >= 0)
+            storage[index] = r;
+        else
+            System.out.println("UPDATE ERROR: " + r.getUuid() + " не существует");
+    }
+
+    @Override
     public void delete(String uuid) {
         int index = findIndex(uuid);
         if (index >= 0) {
@@ -61,8 +60,9 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     @Override
