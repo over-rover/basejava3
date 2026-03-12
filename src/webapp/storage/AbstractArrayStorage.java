@@ -1,5 +1,8 @@
 package webapp.storage;
 
+import webapp.exception.ExistStorageException;
+import webapp.exception.NotExistStorageException;
+import webapp.exception.StorageException;
 import webapp.model.Resume;
 
 import java.util.Arrays;
@@ -13,14 +16,15 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         String uuid = r.getUuid();
         if (size >= STORAGE_LIMIT)
-            System.out.println("SAVE ERROR: " + uuid + " не добавлено. Хранилище заполнено");
+            throw new StorageException("SAVE ERROR: Хранилище заполнено", uuid);
 
         int index = findIndex(uuid);
         if (index < 0) {
             doSave(r, index);
             size++;
-        } else
-            System.out.println("SAVE ERROR: " + uuid + " уже существует");
+        } else {
+            throw new ExistStorageException(uuid);
+        }
     }
 
     @Override
@@ -29,8 +33,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0)
             return storage[index];
         else {
-            System.out.println("GET ERROR: " + uuid + " не существует");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -42,10 +45,11 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void update(Resume r) {
         int index = findIndex(r.getUuid());
-        if (index >= 0)
+        if (index >= 0) {
             storage[index] = r;
-        else
-            System.out.println("UPDATE ERROR: " + r.getUuid() + " не существует");
+        } else {
+            throw new NotExistStorageException(r.getUuid());
+        }
     }
 
     @Override
@@ -55,8 +59,9 @@ public abstract class AbstractArrayStorage implements Storage {
             doDelete(index);
             size--;
             storage[size] = null;
-        } else
-            System.out.println("DELETE ERROR: " + uuid + " не существует");
+        } else {
+            throw new NotExistStorageException(uuid);
+        }
     }
 
     @Override
