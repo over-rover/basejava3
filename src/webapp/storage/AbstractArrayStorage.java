@@ -19,22 +19,20 @@ public abstract class AbstractArrayStorage implements Storage {
             throw new StorageException("SAVE ERROR: Хранилище заполнено", uuid);
 
         int index = findIndex(uuid);
-        if (index < 0) {
-            doSave(r, index);
-            size++;
-        } else {
+        if (index >= 0) {
             throw new ExistStorageException(uuid);
         }
+        doSave(r, index);
+        size++;
     }
 
     @Override
     public Resume get(String uuid) {
         int index = findIndex(uuid);
-        if (index >= 0)
-            return storage[index];
-        else {
+        if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
+        return storage[index];
     }
 
     @Override
@@ -45,23 +43,21 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void update(Resume r) {
         int index = findIndex(r.getUuid());
-        if (index >= 0) {
-            storage[index] = r;
-        } else {
+        if (index < 0) {
             throw new NotExistStorageException(r.getUuid());
         }
+        storage[index] = r;
     }
 
     @Override
     public void delete(String uuid) {
         int index = findIndex(uuid);
-        if (index >= 0) {
-            doDelete(index);
-            size--;
-            storage[size] = null;
-        } else {
+        if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
+        doDelete(index);
+        size--;
+        storage[size] = null;
     }
 
     @Override
