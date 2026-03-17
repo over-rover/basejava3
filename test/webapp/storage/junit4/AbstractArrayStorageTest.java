@@ -12,7 +12,6 @@ import webapp.storage.Storage;
 
 public abstract class AbstractArrayStorageTest {
     private final Storage storage;
-    private final int STORAGE_LIMIT = 10_000;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -20,20 +19,20 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_4 = "uuid4";
     private static final String DUMMY = "dummy";
 
-    private Resume r1 = new Resume(UUID_1);
-    private Resume r2 = new Resume(UUID_2);
-    private Resume r3 = new Resume(UUID_3);
-    private Resume[] initialResumes = new Resume[]{r1, r2, r3};
+    private final Resume r1 = new Resume(UUID_1);
+    private final Resume r2 = new Resume(UUID_2);
+    private final Resume r3 = new Resume(UUID_3);
+    private final Resume[] initialResumes = new Resume[]{r1, r2, r3};
 
-    private Resume r4 = new Resume(UUID_4);
-    private Resume dummy = new Resume(DUMMY);
+    private final Resume r4 = new Resume(UUID_4);
+    private final Resume dummy = new Resume(DUMMY);
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         storage.clear();
         storage.save(r1);
         storage.save(r2);
@@ -48,8 +47,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverFlow() {
+        int storageLimit = 10_000;
         try {
-            for (int i = initialResumes.length; i < STORAGE_LIMIT; i++) {
+            for (int i = initialResumes.length; i < storageLimit; i++) {
                 storage.save(new Resume());
             }
         } catch (Exception e) {
@@ -83,7 +83,6 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() {
-        ;
         storage.update(new Resume(UUID_1));
         Assert.assertEquals(r1, storage.get(UUID_1));
     }
