@@ -10,7 +10,6 @@ import webapp.storage.Storage;
 
 import static org.junit.Assert.*;
 
-
 public abstract class AbstractArrayStorageTest {
     private final Storage storage;
 
@@ -22,6 +21,7 @@ public abstract class AbstractArrayStorageTest {
     private final Resume r1 = new Resume(UUID_1);
     private final Resume r2 = new Resume(UUID_2);
     private final Resume r3 = new Resume(UUID_3);
+
     private final int initialSize = 3;
 
     private final Resume r4 = new Resume(UUID_4);
@@ -79,8 +79,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAllTest() {
-        Resume[] initialResumes = new Resume[]{r1, r2, r3};
-        assertArrayEquals(initialResumes, storage.getAll());
+        Resume[] expectedResumes = {r1, r2, r3};
+        assertArrayEquals(expectedResumes, storage.getAll());
     }
 
     @Test
