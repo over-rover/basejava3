@@ -1,5 +1,7 @@
 package webapp.storage.junit4;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import webapp.exception.ExistStorageException;
@@ -8,11 +10,7 @@ import webapp.exception.StorageException;
 import webapp.model.Resume;
 import webapp.storage.Storage;
 
-import static org.junit.Assert.*;
-
 public abstract class AbstractArrayStorageTest {
-    private final Storage storage;
-
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -23,6 +21,7 @@ public abstract class AbstractArrayStorageTest {
     private final Resume r3 = new Resume(UUID_3);
     private final Resume r4 = new Resume(UUID_4);
 
+    private final Storage storage;
     private final int initialSize = 3;
 
     public AbstractArrayStorageTest(Storage storage) {
