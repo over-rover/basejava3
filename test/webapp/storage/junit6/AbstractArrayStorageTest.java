@@ -16,10 +16,17 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private final Resume r1 = new Resume(UUID_1);
-    private final Resume r2 = new Resume(UUID_2);
-    private final Resume r3 = new Resume(UUID_3);
-    private final Resume r4 = new Resume(UUID_4);
+    private static final Resume r1;
+    private static final Resume r2;
+    private static final Resume r3;
+    private static final Resume r4;
+
+    static {
+        r1 = new Resume(UUID_1);
+        r2 = new Resume(UUID_2);
+        r3 = new Resume(UUID_3);
+        r4 = new Resume(UUID_4);
+    }
 
     private final Storage storage;
     private final int initialSize = 3;
