@@ -63,7 +63,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    public void getNotExistTest() {
+    public void getIFNotExistTest() {
         assertThrows(NotExistStorageException.class, () -> storage.get(UUID_4));
     }
 
