@@ -1,26 +1,28 @@
 package webapp.storage;
 
+import java.util.Arrays;
 import webapp.model.Resume;
 
-import java.util.Arrays;
-
 public class SortedArrayStorage extends AbstractArrayStorage {
-
     @Override
-    protected int findIndex(String uuid) {
+    protected Object getSearchKey(String uuid) {
         Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
     @Override
-    protected void doSave(Resume r, int index) {
-        int insertIndex = -index - 1;
+    protected void doSave(Resume r, Object searchKey) {
+        checkIfOverflow(r);
+        int insertIndex = -(int) searchKey - 1;
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         storage[insertIndex] = r;
+        size++;
     }
 
     @Override
-    protected void doDelete(int index) {
+    protected void doDelete(Object searchKey) {
+        int index = (int) searchKey;
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+        size--;
     }
 }
