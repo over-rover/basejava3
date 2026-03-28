@@ -25,17 +25,16 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void checkIfExist(Resume r, Object searchKey) {
+    protected void checkIfExist(Resume r, Object index) {
         if (storage.contains(r)) {
             throw new ExistStorageException(r.getUuid());
         }
     }
 
     @Override
-    protected void checkIfNotExist(Object searchKey) {
-        String uuid = (String) searchKey;
-        if (uuid.equals(NO_SUCH_UUID)) {
-            throw new NotExistStorageException(uuid);
+    protected void checkIfNotExist(Object index) {
+        if ((int) index < 0) {
+            throw new NotExistStorageException(NO_SUCH_UUID);
         }
     }
 
@@ -43,43 +42,29 @@ public class ListStorage extends AbstractStorage {
     protected Object getSearchKey(String uuid) {
         for (Resume r : storage) {
             if (r.getUuid().equals(uuid)) {
-                return uuid;
+                return storage.indexOf(r);
             }
         }
-        return NO_SUCH_UUID;
+        return -1;
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, Object index) {
         storage.add(r);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        String uuid = (String) searchKey;
-        for (Resume r : storage) {
-            if (r.getUuid().equals(uuid)) {
-                return r;
-            }
-        }
-        throw new NotExistStorageException(uuid);
+    protected Resume doGet(Object index) {
+        return storage.get((int) index);
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
+    protected void doUpdate(Resume r, Object index) {
         storage.set(storage.indexOf(r), r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        String uuid = (String) searchKey;
-        Resume resumeToDelete = null;
-        for (Resume r : storage) {
-            if (r.getUuid().equals(uuid)) {
-                resumeToDelete = r;
-                break;
-            }
-        }
-        storage.remove(resumeToDelete);
+    protected void doDelete(Object index) {
+        storage.remove((int) index);
     }
 }
