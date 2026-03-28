@@ -14,15 +14,13 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doInsert(Resume r, Object index) {
         checkIfOverflow(r);
         storage[size] = r;
-        size++;
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        storage[(int) searchKey] = storage[size - 1];
-        size--;
+    protected void doRemove(Object index) {
+        storage[(int) index] = storage[size - 1];
     }
 }

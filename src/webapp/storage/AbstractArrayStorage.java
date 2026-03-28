@@ -34,33 +34,45 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void checkIfExist(Resume r, Object searchKey) {
-        if ((int) searchKey >= 0) {
+    protected void checkIfExist(Resume r, Object index) {
+        if ((int) index >= 0) {
             throw new ExistStorageException(r.getUuid());
         }
     }
 
     @Override
-    protected void checkIfNotExist(Object searchKey) {
-        int index = (int) searchKey;
-        if (index < 0) {
-            throw new NotExistStorageException(String.valueOf(index));
+    protected void checkIfNotExist(Object index) {
+        int indexOfResume = (int) index;
+        if (indexOfResume < 0) {
+            throw new NotExistStorageException(String.valueOf(indexOfResume));
         }
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return storage[(int) searchKey];
+    protected void doSave(Resume r, Object index) {
+        checkIfOverflow(r);
+        doInsert(r, index);
+        size++;
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        storage[(int) searchKey] = r;
+    protected Resume doGet(Object index) {
+        return storage[(int) index];
     }
 
-    protected abstract Object getSearchKey(String uuid);
+    @Override
+    protected void doUpdate(Resume r, Object index) {
+        storage[(int) index] = r;
+    }
 
-    protected abstract void doSave(Resume r, Object searchKey);
+    @Override
+    protected void doDelete(Object index) {
+        doRemove(index);
+        size--;
+        storage[size] = null;
+    }
 
-    protected abstract void doDelete(Object searchKey);
+    protected abstract void doInsert(Resume r, Object index);
+
+    protected abstract void doRemove(Object index);
 }

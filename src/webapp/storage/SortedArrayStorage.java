@@ -11,18 +11,16 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doInsert(Resume r, Object index) {
         checkIfOverflow(r);
-        int insertIndex = -(int) searchKey - 1;
+        int insertIndex = -(int) index - 1;
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         storage[insertIndex] = r;
-        size++;
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        int index = (int) searchKey;
-        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-        size--;
+    protected void doRemove(Object index) {
+        int removeIndex = (int) index;
+        System.arraycopy(storage, removeIndex + 1, storage, removeIndex, size - removeIndex - 1);
     }
 }
