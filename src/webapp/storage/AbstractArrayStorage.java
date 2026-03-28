@@ -1,8 +1,6 @@
 package webapp.storage;
 
 import java.util.Arrays;
-import webapp.exception.ExistStorageException;
-import webapp.exception.NotExistStorageException;
 import webapp.exception.StorageException;
 import webapp.model.Resume;
 
@@ -30,21 +28,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected void checkIfOverflow(Resume r) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("SAVE ERROR: Хранилище заполнено", r.getUuid());
-        }
-    }
-
-    @Override
-    protected void checkIfExist(Resume r, Object index) {
-        if ((int) index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
-    }
-
-    @Override
-    protected void checkIfNotExist(Object index) {
-        int indexOfResume = (int) index;
-        if (indexOfResume < 0) {
-            throw new NotExistStorageException(String.valueOf(indexOfResume));
         }
     }
 

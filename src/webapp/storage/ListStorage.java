@@ -2,8 +2,6 @@ package webapp.storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import webapp.exception.ExistStorageException;
-import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 
 public class ListStorage extends AbstractStorage {
@@ -22,20 +20,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     public int size() {
         return storage.size();
-    }
-
-    @Override
-    protected void checkIfExist(Resume r, Object index) {
-        if (storage.contains(r)) {
-            throw new ExistStorageException(r.getUuid());
-        }
-    }
-
-    @Override
-    protected void checkIfNotExist(Object index) {
-        if ((int) index < 0) {
-            throw new NotExistStorageException(NO_SUCH_UUID);
-        }
     }
 
     @Override

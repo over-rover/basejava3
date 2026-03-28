@@ -1,5 +1,7 @@
 package webapp.storage;
 
+import webapp.exception.ExistStorageException;
+import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
@@ -33,6 +35,18 @@ public abstract class AbstractStorage implements Storage {
         doDelete(searchKey);
     }
 
+    protected void checkIfExist(Resume r, Object index) {
+        if ((int) index >= 0) {
+            throw new ExistStorageException(r.getUuid());
+        }
+    }
+
+    protected void checkIfNotExist(Object index) {
+        if ((int) index < 0) {
+            throw new NotExistStorageException(NO_SUCH_UUID);
+        }
+    }
+
     @Override
     public abstract Resume[] getAll();
 
@@ -41,10 +55,6 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public abstract int size();
-
-    protected abstract void checkIfExist(Resume r, Object searchKey);
-
-    protected abstract void checkIfNotExist(Object searchKey);
 
     protected abstract Object getSearchKey(String uuid);
 
