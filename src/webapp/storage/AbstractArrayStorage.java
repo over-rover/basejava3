@@ -25,17 +25,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected void checkIfOverflow(Resume r) {
+    @Override
+    protected void doSave(Resume r, Object index) {
+        checkCapacity(r);
+        addResume(r, index);
+        size++;
+    }
+
+    protected void checkCapacity(Resume r) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("SAVE ERROR: Хранилище заполнено", r.getUuid());
         }
-    }
-
-    @Override
-    protected void doSave(Resume r, Object index) {
-        checkIfOverflow(r);
-        doInsert(r, index);
-        size++;
     }
 
     @Override
@@ -50,12 +50,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void doDelete(Object index) {
-        doRemove(index);
+        removeResume(index);
         size--;
         storage[size] = null;
     }
 
-    protected abstract void doInsert(Resume r, Object index);
+    protected abstract void addResume(Resume r, Object index);
 
-    protected abstract void doRemove(Object index);
+    protected abstract void removeResume(Object index);
 }
