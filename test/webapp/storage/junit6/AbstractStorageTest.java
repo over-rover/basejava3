@@ -9,7 +9,7 @@ import webapp.storage.Storage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AbstractStorageTest {
+public abstract class AbstractStorageTest {
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
