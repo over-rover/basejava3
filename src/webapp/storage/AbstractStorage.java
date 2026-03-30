@@ -35,26 +35,17 @@ public abstract class AbstractStorage implements Storage {
         doDelete(searchKey);
     }
 
-    protected void checkIfExist(Resume r, Object index) {
-        if ((int) index >= 0) {
+    private void checkIfExist(Resume r, Object searchKey) {
+        if ((int) searchKey >= 0) {
             throw new ExistStorageException(r.getUuid());
         }
     }
 
-    protected void checkIfNotExist(Object index) {
-        if ((int) index < 0) {
+    private void checkIfNotExist(Object searchKey) {
+        if ((int) searchKey < 0) {
             throw new NotExistStorageException(NO_SUCH_UUID);
         }
     }
-
-    @Override
-    public abstract Resume[] getAll();
-
-    @Override
-    public abstract void clear();
-
-    @Override
-    public abstract int size();
 
     protected abstract Object getSearchKey(String uuid);
 
