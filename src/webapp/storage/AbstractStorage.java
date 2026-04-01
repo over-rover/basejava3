@@ -35,13 +35,13 @@ public abstract class AbstractStorage implements Storage {
         doDelete(searchKey);
     }
 
-    private void checkIfExist(Resume r, Object searchKey) {
+    protected void checkIfExist(Resume r, Object searchKey) {
         if ((int) searchKey >= 0) {
             throw new ExistStorageException(r.getUuid());
         }
     }
 
-    private void checkIfNotExist(Object searchKey) {
+    protected void checkIfNotExist(Object searchKey) {
         if ((int) searchKey < 0) {
             throw new NotExistStorageException(NO_SUCH_UUID);
         }
