@@ -55,6 +55,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[size] = null;
     }
 
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return (int) searchKey >= 0;
+    }
+
     protected abstract void addResume(Resume r, Object index);
 
     protected abstract void removeResume(Object index);

@@ -51,4 +51,9 @@ public class ListStorage extends AbstractStorage {
     protected void doDelete(Object index) {
         storage.remove((int) index);
     }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return (int) searchKey >= 0;
+    }
 }

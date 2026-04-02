@@ -5,45 +5,43 @@ import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    public static final String NO_SUCH_UUID = "null";
-
     @Override
     public void save(Resume r) {
         Object searchKey = getSearchKey(r.getUuid());
-        checkIfExist(r, searchKey);
+        throwIfExistInStorage(searchKey, r.getUuid());
         doSave(r, searchKey);
     }
 
     @Override
     public Resume get(String uuid) {
         Object searchKey = getSearchKey(uuid);
-        checkIfNotExist(searchKey);
+        throwIfNotExistInStorage(searchKey, uuid);
         return doGet(searchKey);
     }
 
     @Override
     public void update(Resume r) {
         Object searchKey = getSearchKey(r.getUuid());
-        checkIfNotExist(searchKey);
+        throwIfNotExistInStorage(searchKey, r.getUuid());
         doUpdate(r, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
         Object searchKey = getSearchKey(uuid);
-        checkIfNotExist(searchKey);
+        throwIfNotExistInStorage(searchKey, uuid);
         doDelete(searchKey);
     }
 
-    protected void checkIfExist(Resume r, Object searchKey) {
-        if ((int) searchKey >= 0) {
-            throw new ExistStorageException(r.getUuid());
+    private void throwIfExistInStorage(Object searchKey, String uuid) {
+        if (isExist(searchKey)) {
+            throw new ExistStorageException(uuid);
         }
     }
 
-    protected void checkIfNotExist(Object searchKey) {
-        if ((int) searchKey < 0) {
-            throw new NotExistStorageException(NO_SUCH_UUID);
+    private void throwIfNotExistInStorage(Object searchKey, String uuid) {
+        if (!isExist(searchKey)) {
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -56,4 +54,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void doUpdate(Resume r, Object searchKey);
 
     protected abstract void doDelete(Object searchKey);
+
+    protected abstract boolean isExist(Object searchKey);
 }

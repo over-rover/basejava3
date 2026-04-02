@@ -2,8 +2,6 @@ package webapp.storage;
 
 import java.util.HashMap;
 import java.util.Map;
-import webapp.exception.ExistStorageException;
-import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 
 public class MapStorage extends AbstractStorage {
@@ -50,16 +48,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void checkIfExist(Resume r, Object searchKey) {
-        if (storage.containsKey((String) searchKey)) {
-            throw new ExistStorageException((String) searchKey);
-        }
-    }
-
-    @Override
-    protected void checkIfNotExist(Object searchKey) {
-        if (!storage.containsKey((String) searchKey)) {
-            throw new NotExistStorageException((String) searchKey);
-        }
+    protected boolean isExist(Object searchKey) {
+        return storage.containsKey((String) searchKey);
     }
 }
