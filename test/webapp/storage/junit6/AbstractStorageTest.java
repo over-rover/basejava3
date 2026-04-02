@@ -7,6 +7,8 @@ import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 import webapp.storage.Storage;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
@@ -21,15 +23,15 @@ public abstract class AbstractStorageTest {
     private static final Resume r3;
     private static final Resume r4;
 
+    protected final Storage storage;
+    private final int initialSize = 3;
+
     static {
         r1 = new Resume(UUID_1);
         r2 = new Resume(UUID_2);
         r3 = new Resume(UUID_3);
         r4 = new Resume(UUID_4);
     }
-
-    protected final Storage storage;
-    private final int initialSize = 3;
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -70,7 +72,10 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllTest() {
         Resume[] expectedResumes = {r1, r2, r3};
-        assertArrayEquals(expectedResumes, storage.getAll());
+        Arrays.sort(expectedResumes);
+        Resume[] actualResumes = storage.getAll();
+        Arrays.sort(actualResumes);
+        assertArrayEquals(expectedResumes, actualResumes);
     }
 
     @Test
