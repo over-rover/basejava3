@@ -72,9 +72,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllTest() {
         Resume[] expectedResumes = {r1, r2, r3};
-        Arrays.sort(expectedResumes);
+        //Arrays.sort(expectedResumes);
         Resume[] actualResumes = storage.getAll();
-        Arrays.sort(actualResumes);
+        //Arrays.sort(actualResumes);
         assertArrayEquals(expectedResumes, actualResumes);
     }
 
