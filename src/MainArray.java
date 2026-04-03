@@ -1,9 +1,8 @@
-import webapp.model.Resume;
-import webapp.storage.ArrayStorage;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import webapp.model.Resume;
+import webapp.storage.ArrayStorage;
 
 /**
  * Interactive test for webapp.storage.ArrayStorage implementation
@@ -59,7 +58,7 @@ public class MainArray {
     }
 
     static void printAll() {
-        Resume[] all = ARRAY_STORAGE.getAll();
+        Resume[] all = ARRAY_STORAGE.getAllSorted().toArray(new Resume[0]);
         System.out.println("----------------------------");
         if (all.length == 0) {
             System.out.println("Empty");

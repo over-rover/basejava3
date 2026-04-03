@@ -1,18 +1,15 @@
 package webapp.storage.junit6;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 import webapp.exception.ExistStorageException;
 import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 import webapp.storage.Storage;
 
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 public abstract class AbstractStorageTest {
-
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -70,12 +67,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAllTest() {
-        Resume[] expectedResumes = {r1, r2, r3};
-        //Arrays.sort(expectedResumes);
-        Resume[] actualResumes = storage.getAll();
-        //Arrays.sort(actualResumes);
-        assertArrayEquals(expectedResumes, actualResumes);
+    public void getAllSortedTest() {
+        List<Resume> expectedResumes = List.of(r1, r2, r3);
+        List<Resume> actualResumes = storage.getAllSorted();
+        assertIterableEquals(expectedResumes, actualResumes);
     }
 
     @Test
@@ -106,7 +101,7 @@ public abstract class AbstractStorageTest {
     public void clearTest() {
         storage.clear();
         assertEquals(0, storage.size());
-        assertArrayEquals(new Resume[0], storage.getAll());
+        assertIterableEquals(List.of(), storage.getAllSorted());
     }
 
     @Test

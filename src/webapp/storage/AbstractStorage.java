@@ -1,10 +1,14 @@
 package webapp.storage;
 
+import java.util.Comparator;
 import webapp.exception.ExistStorageException;
 import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
+    protected static final Comparator<Resume> RESUME_COMPARATOR =
+            (r1, r2) -> r1.getUuid().compareTo(r2.getUuid());
+
     @Override
     public void save(Resume r) {
         Object searchKey = getSearchKey(r.getUuid());

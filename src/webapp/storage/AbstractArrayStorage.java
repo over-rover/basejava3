@@ -1,6 +1,8 @@
 package webapp.storage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import webapp.exception.StorageException;
 import webapp.model.Resume;
 
@@ -10,8 +12,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public List<Resume> getAllSorted() {
+        Resume[] normalizedStorage = Arrays.copyOf(storage, size);
+        List<Resume> listStorage = new ArrayList<>(List.of(normalizedStorage));
+        listStorage.sort(RESUME_COMPARATOR);
+        return listStorage;
     }
 
     @Override
