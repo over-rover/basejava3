@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import webapp.model.Resume;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
     protected final Map<String, Resume> storage = new HashMap<>();
 
     @Override
