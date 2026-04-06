@@ -6,8 +6,19 @@ import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    protected static final Comparator<Resume> RESUME_COMPARATOR =
-            (r1, r2) -> r1.getUuid().compareTo(r2.getUuid());
+/*    protected static final Comparator<Resume> RESUME_COMPARATOR = (Resume r1, Resume r2) -> {
+        if (r1.getFullName().hashCode() != r2.getFullName().hashCode()) {
+            return r1.getFullName().compareTo(r2.getFullName());
+        }
+        return r1.getUuid().compareTo(r2.getUuid());
+    };*/
+
+    protected static final Comparator<Resume> RESUME_COMPARATOR = Comparator
+            .comparing((Resume r) -> r.getFullName())
+            .thenComparing((Resume r) -> r.getUuid());
+
+/*    protected static final Comparator<Resume> RESUME_COMPARATOR = Comparator
+            .comparing(Resume::getFullName).thenComparing(Resume::getUuid);*/
 
     @Override
     public void save(Resume r) {
