@@ -38,8 +38,8 @@ public abstract class AbstractStorageTest {
     public void setUp() {
         storage.clear();
         storage.save(r1);
-        storage.save(r2);
         storage.save(r3);
+        storage.save(r2);
     }
 
     @Test
