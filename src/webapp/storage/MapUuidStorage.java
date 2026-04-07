@@ -10,10 +10,8 @@ public class MapUuidStorage extends AbstractStorage {
     protected final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> listStorage = new ArrayList<>(storage.values());
-        listStorage.sort(RESUME_COMPARATOR);
-        return listStorage;
+    public List<Resume> getListStorage() {
+        return new ArrayList<>(storage.values());
     }
 
     @Override
