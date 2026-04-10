@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import webapp.model.Resume;
 
-public class MapResumeStorage extends AbstractStorage<Integer> {
-    protected final Map<Integer, Resume> storage = new HashMap<>();
+public class MapResumeStorage extends AbstractStorage<Resume> {
+    protected final Map<String, Resume> storage = new HashMap<>();
 
     @Override
     public List<Resume> getListStorage() {
@@ -25,32 +25,32 @@ public class MapResumeStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Integer getSearchKey(String uuid) {
-        return uuid.hashCode();
+    protected Resume getSearchKey(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override
-    protected void doSave(Resume r, Integer searchKey) {
-        storage.put(searchKey, r);
+    protected void doSave(Resume r, Resume searchKey) {
+        storage.put(r.getUuid(), r);
     }
 
     @Override
-    protected Resume doGet(Integer searchKey) {
-        return storage.get(searchKey);
+    protected Resume doGet(Resume searchKey) {
+        return storage.get(searchKey.getUuid());
     }
 
     @Override
-    protected void doUpdate(Resume r, Integer searchKey) {
-        storage.replace(searchKey, r);
+    protected void doUpdate(Resume r, Resume searchKey) {
+        storage.replace(searchKey.getUuid(), r);
     }
 
     @Override
-    protected void doDelete(Integer searchKey) {
-        storage.remove(searchKey);
+    protected void doDelete(Resume searchKey) {
+        storage.remove(searchKey.getUuid());
     }
 
     @Override
-    protected boolean isExist(Integer searchKey) {
-        return storage.containsKey(searchKey);
+    protected boolean isExist(Resume searchKey) {
+        return searchKey != null;
     }
 }
