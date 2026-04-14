@@ -7,11 +7,8 @@ import java.util.UUID;
 public class Resume {
     private final String uuid;
     private final String fullName;
-    //изначально было Map<SectionType, Section> section - компилятор предупредил о raw type
-    //попробовал Section<S> - cannot resolve symbol S. Не знает класс S
-    //методом исключения поставил ?, друих вариантов не нашел.
-    private final Map<ContactType, Section<?>> contacts = new LinkedHashMap<>();
-    private final Map<SectionType, Section<?>> section = new LinkedHashMap<>();
+    private final Map<ContactType, Link> contacts = new LinkedHashMap<>();
+    private final Map<SectionType, AbstractSection> sections = new LinkedHashMap<>();
 
     public Resume() {
         this(UUID.randomUUID().toString());
@@ -34,12 +31,12 @@ public class Resume {
         return fullName;
     }
 
-    public void setContacts(ContactType contactType, Section<?> contact) {
-        contacts.put(contactType, contact);
+    public void setContacts(ContactType contactType, Link link) {
+        contacts.put(contactType, link);
     }
 
-    public void setSection(SectionType sectionType, Section<?> sectionContent) {
-        section.put(sectionType, sectionContent);
+    public void setSection(SectionType sectionType, AbstractSection content) {
+        sections.put(sectionType, content);
     }
 
     @Override
@@ -58,15 +55,15 @@ public class Resume {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(fullName + "\n");
-        for (Map.Entry<ContactType, Section<?>> entry : contacts.entrySet()) {
-            sb.append(entry.getKey());
-            sb.append(entry.getValue());
-        }
-
-        for (Map.Entry<SectionType, Section<?>> entry : section.entrySet()) {
-            sb.append(entry.getKey());
-            sb.append(entry.getValue());
-        }
+        mapToStringBuilder(contacts, sb);
+        mapToStringBuilder(sections, sb);
         return sb.toString();
+    }
+
+    private void mapToStringBuilder(Map<?, ?> map, StringBuilder sb) {
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            sb.append(entry.getKey());
+            sb.append(entry.getValue()).append("\n");
+        }
     }
 }

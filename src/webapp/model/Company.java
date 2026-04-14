@@ -1,40 +1,26 @@
 package webapp.model;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class Company {
-    private String companyName;
-    private LocalDate startDate;
-    private LocalDate stopDate;
-    private String position = "position may be null in educational company. null-point exception possible in toString()";
-    private String duty;
+    private Link link;
+    private List<Period> periods;
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setLink(Link link) {
+        this.link = link;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setStopDate(LocalDate stopDate) {
-        this.stopDate = stopDate;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public void setDuty(String duty) {
-        this.duty = duty;
+    public void setPeriods(List<Period> periods) {
+        this.periods = periods;
     }
 
     @Override
     public String toString() {
-        return companyName + "\n" +
-                startDate + "\n" +
-                stopDate + "\n" +
-                position + "\n" +
-                duty;
+        StringBuilder sb = new StringBuilder();
+        sb.append(link).append("\n");
+        for (Period period : periods) {
+            sb.append(period).append("\n");
+        }
+        return sb.toString();
     }
 }

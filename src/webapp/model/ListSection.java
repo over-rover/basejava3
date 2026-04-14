@@ -2,19 +2,18 @@ package webapp.model;
 
 import java.util.List;
 
-public class ListSection extends Section<List<String>> {
-    private List<String> sectionContent;
+public class ListSection extends AbstractSection {
+    private List<String> strings;
 
-    @Override
-    public void setSectionContent(List<String> sectionContent) {
-        this.sectionContent = sectionContent;
+    public void setStrings(List<String> strings) {
+        this.strings = strings;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (String content : sectionContent) {
-            sb.append(content).append("\n");
+        for (String text : strings) {
+            sb.append(text).append("\n");
         }
         return sb.toString();
     }

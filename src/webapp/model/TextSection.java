@@ -1,15 +1,14 @@
 package webapp.model;
 
-public class TextSection extends Section<String> {
-    private String sectionContent;
+public class TextSection extends AbstractSection {
+    private String text;
 
-    @Override
-    public void setSectionContent(String stringContent) {
-        this.sectionContent = stringContent;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
     public String toString() {
-        return sectionContent + "\n";
+        return text + "\n";
     }
 }
