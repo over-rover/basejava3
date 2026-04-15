@@ -9,7 +9,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     public List<Resume> getListStorage() {
-        return storage;
+        return new ArrayList<>(storage);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Integer getSearchKey(String uuid) {
+    protected Integer findSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;

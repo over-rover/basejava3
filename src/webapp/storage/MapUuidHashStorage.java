@@ -25,7 +25,7 @@ public class MapUuidHashStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Integer getSearchKey(String uuid) {
+    protected Integer findSearchKey(String uuid) {
         return uuid.hashCode();
     }
 

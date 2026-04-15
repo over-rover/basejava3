@@ -9,14 +9,14 @@ import webapp.model.Resume;
 
 public abstract class AbstractStorage<SK> implements Storage {
     protected static final Comparator<Resume> RESUME_COMPARATOR = Comparator
-            .comparing(Resume::getFullName).thenComparing(Resume::getUuid);
+            .comparing(Resume::getUuid).thenComparing(Resume::getFullName);
 
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     @Override
     public void save(Resume r) {
         // LOG.info("Save " + r.getUuid());
-        SK searchKey = getSearchKey(r.getUuid());
+        SK searchKey = findSearchKey(r.getUuid());
         throwIfExistInStorage(searchKey, r.getUuid());
         doSave(r, searchKey);
     }
@@ -24,7 +24,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     @Override
     public Resume get(String uuid) {
         // LOG.info("Get " + uuid);
-        SK searchKey = getSearchKey(uuid);
+        SK searchKey = findSearchKey(uuid);
         throwIfNotExistInStorage(searchKey, uuid);
         return doGet(searchKey);
     }
@@ -32,15 +32,15 @@ public abstract class AbstractStorage<SK> implements Storage {
     @Override
     public List<Resume> getAllSorted() {
         // LOG.info("Get all sorted");
-        List<Resume> listStorage = getListStorage();
-        listStorage.sort(RESUME_COMPARATOR);
-        return listStorage;
+        List<Resume> resumes = getListStorage();
+        resumes.sort(RESUME_COMPARATOR);
+        return resumes;
     }
 
     @Override
     public void update(Resume r) {
         // LOG.info("Update " + r.getUuid());
-        SK searchKey = getSearchKey(r.getUuid());
+        SK searchKey = findSearchKey(r.getUuid());
         throwIfNotExistInStorage(searchKey, r.getUuid());
         doUpdate(r, searchKey);
     }
@@ -48,7 +48,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     @Override
     public void delete(String uuid) {
         // LOG.info("Delete " + uuid);
-        SK searchKey = getSearchKey(uuid);
+        SK searchKey = findSearchKey(uuid);
         throwIfNotExistInStorage(searchKey, uuid);
         doDelete(searchKey);
     }
@@ -67,7 +67,7 @@ public abstract class AbstractStorage<SK> implements Storage {
         }
     }
 
-    protected abstract SK getSearchKey(String uuid);
+    protected abstract SK findSearchKey(String uuid);
 
     protected abstract void doSave(Resume r, SK searchKey);
 

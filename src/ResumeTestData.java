@@ -12,17 +12,17 @@ public class ResumeTestData {
         Link contact = new Link();
         contact.setName("+7(921) 855-0482");
         contact.setHyperlink(URI.create("https://гиперссылка"));
-        resume.setContacts(ContactType.TEL, contact);
+        resume.setContact(ContactType.TEL, contact);
 
         contact = new Link();
         contact.setName("grigory.kislin");
         contact.setHyperlink(URI.create("https://skype.com"));
-        resume.setContacts(ContactType.SKYPE, contact);
+        resume.setContact(ContactType.SKYPE, contact);
 
         contact = new Link();
         contact.setName("gkislin@yandex.ru");
         contact.setHyperlink(URI.create("https://mail.yandex.ru"));
-        resume.setContacts(ContactType.EMAIL, contact);
+        resume.setContact(ContactType.EMAIL, contact);
 
         // fill OBJECTIVE
         TextSection text = new TextSection();

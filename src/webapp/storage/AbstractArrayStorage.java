@@ -13,8 +13,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     public List<Resume> getListStorage() {
-        Resume[] normalizedStorage = Arrays.copyOf(storage, size);
-        return new ArrayList<>(List.of(normalizedStorage));
+        return new ArrayList<>(List.of(Arrays.copyOf(storage, size)));
     }
 
     @Override
@@ -30,12 +29,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void doSave(Resume r, Integer index) {
-        checkCapacity(r);
+        throwIfOverflow(r);
         addResume(r, index);
         size++;
     }
 
-    protected void checkCapacity(Resume r) {
+    protected void throwIfOverflow(Resume r) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("SAVE ERROR: Хранилище заполнено", r.getUuid());
         }
@@ -59,8 +58,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected boolean isExist(Integer searchKey) {
-        return searchKey >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     protected abstract void addResume(Resume r, Integer index);

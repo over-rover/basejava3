@@ -5,7 +5,7 @@ import webapp.model.Resume;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    protected Integer getSearchKey(String uuid) {
+    protected Integer findSearchKey(String uuid) {
         Resume searchKey = new Resume(uuid, "any string");
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
