@@ -15,7 +15,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public void save(Resume r) {
-        LOG.info("Save " + r.getUuid());
+        // LOG.info("Save " + r.getUuid());
         SK searchKey = getSearchKey(r.getUuid());
         throwIfExistInStorage(searchKey, r.getUuid());
         doSave(r, searchKey);
@@ -23,7 +23,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        LOG.info("Get " + uuid);
+        // LOG.info("Get " + uuid);
         SK searchKey = getSearchKey(uuid);
         throwIfNotExistInStorage(searchKey, uuid);
         return doGet(searchKey);
@@ -31,7 +31,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        LOG.info("Get all sorted");
+        // LOG.info("Get all sorted");
         List<Resume> listStorage = getListStorage();
         listStorage.sort(RESUME_COMPARATOR);
         return listStorage;
@@ -39,7 +39,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public void update(Resume r) {
-        LOG.info("Update " + r.getUuid());
+        // LOG.info("Update " + r.getUuid());
         SK searchKey = getSearchKey(r.getUuid());
         throwIfNotExistInStorage(searchKey, r.getUuid());
         doUpdate(r, searchKey);
@@ -47,7 +47,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public void delete(String uuid) {
-        LOG.info("Delete " + uuid);
+        // LOG.info("Delete " + uuid);
         SK searchKey = getSearchKey(uuid);
         throwIfNotExistInStorage(searchKey, uuid);
         doDelete(searchKey);
@@ -55,14 +55,14 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     private void throwIfExistInStorage(SK searchKey, String uuid) {
         if (isExist(searchKey)) {
-            LOG.warning("Резюме " + uuid + " уже существует!");
+            // LOG.warning("Резюме " + uuid + " уже существует!");
             throw new ExistStorageException(uuid);
         }
     }
 
     private void throwIfNotExistInStorage(SK searchKey, String uuid) {
         if (!isExist(searchKey)) {
-            LOG.warning("Резюме " + uuid + " не существует!");
+            // LOG.warning("Резюме " + uuid + " не существует!");
             throw new NotExistStorageException(uuid);
         }
     }

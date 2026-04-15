@@ -14,6 +14,7 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
+    private static final String fullName = "defaultFullName";
 
     private static final Resume r1;
     private static final Resume r2;
@@ -24,10 +25,10 @@ public abstract class AbstractStorageTest {
     private final int initialSize = 3;
 
     static {
-        r1 = new Resume(UUID_1);
-        r2 = new Resume(UUID_2);
-        r3 = new Resume(UUID_3);
-        r4 = new Resume(UUID_4);
+        r1 = new Resume(UUID_1, fullName);
+        r2 = new Resume(UUID_2, fullName);
+        r3 = new Resume(UUID_3, fullName);
+        r4 = new Resume(UUID_4, fullName);
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -51,7 +52,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void saveIfExistTest() {
-        assertThrows(ExistStorageException.class, () -> storage.save(new Resume(UUID_1)));
+        assertThrows(ExistStorageException.class, () -> storage.save(new Resume(UUID_1, fullName)));
     }
 
     @Test
@@ -75,7 +76,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void updateTest() {
-        Resume resume = new Resume(UUID_1);
+        Resume resume = new Resume(UUID_1,fullName);
         storage.update(resume);
         assertSame(resume, storage.get(UUID_1));
     }

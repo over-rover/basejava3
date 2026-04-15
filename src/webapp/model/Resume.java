@@ -2,23 +2,22 @@ package webapp.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
-public class Resume {
+public class Resume implements Comparable<Resume> {
     private final String uuid;
     private final String fullName;
     private final Map<ContactType, Link> contacts = new LinkedHashMap<>();
     private final Map<SectionType, AbstractSection> sections = new LinkedHashMap<>();
 
-    public Resume() {
-        this(UUID.randomUUID().toString());
-    }
-
-    public Resume(String uuid) {
-        this(uuid, "Default fullname");
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(), fullName);
     }
 
     public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "uuid must not be null");
+        Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
@@ -37,6 +36,11 @@ public class Resume {
 
     public void setSection(SectionType sectionType, AbstractSection content) {
         sections.put(sectionType, content);
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        return uuid.compareTo(o.uuid);
     }
 
     @Override
