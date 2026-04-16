@@ -4,24 +4,15 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Period {
-    private String position = "position is null";
-    private String duty = "duty is null";
-    private LocalDate startDate;
-    private LocalDate stopDate;
+    private final String position;
+    private final String duty;
+    private final LocalDate startDate;
+    private final LocalDate stopDate;
 
-    public void setPosition(String position) {
+    public Period(String position, String duty, LocalDate startDate, LocalDate stopDate) {
         this.position = position;
-    }
-
-    public void setDuty(String duty) {
         this.duty = duty;
-    }
-
-    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-    }
-
-    public void setStopDate(LocalDate stopDate) {
         this.stopDate = stopDate;
     }
 

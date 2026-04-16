@@ -3,9 +3,9 @@ package webapp.model;
 import java.util.Objects;
 
 public class TextSection extends AbstractSection {
-    private String text;
+    private final String text;
 
-    public void setText(String text) {
+    public TextSection(String text) {
         this.text = text;
     }
 

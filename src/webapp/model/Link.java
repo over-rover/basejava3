@@ -4,14 +4,11 @@ import java.net.URI;
 import java.util.Objects;
 
 public class Link {
-    private String name;
-    private URI url;
+    private final String name;
+    private final URI url;
 
-    public void setName(String name) {
+    public Link(String name, URI url) {
         this.name = name;
-    }
-
-    public void setUrl(URI url) {
         this.url = url;
     }
 

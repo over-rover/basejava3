@@ -4,14 +4,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Company {
-    private Link link;
-    private List<Period> positions;
+    private final Link link;
+    private final List<Period> positions;
 
-    public void setLink(Link link) {
+    public Company(Link link, List<Period> positions) {
         this.link = link;
-    }
-
-    public void setPositions(List<Period> positions) {
         this.positions = positions;
     }
 
@@ -19,7 +16,8 @@ public class Company {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return Objects.equals(link, company.link) && Objects.equals(positions, company.positions);
+        return Objects.equals(link, company.link) &&
+                Objects.equals(positions, company.positions);
     }
 
     @Override
@@ -31,8 +29,8 @@ public class Company {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(link).append("\n");
-        for (Period period : positions) {
-            sb.append(period).append("\n");
+        for (Period position : positions) {
+            sb.append(position).append("\n");
         }
         return sb.toString();
     }

@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection {
-    private List<String> lines;
+    private final List<String> lines;
 
-    public void setLines(List<String> lines) {
+    public ListSection(List<String> lines) {
         this.lines = lines;
     }
 
