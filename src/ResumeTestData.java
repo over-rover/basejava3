@@ -11,17 +11,17 @@ public class ResumeTestData {
         // fill Contacts
         Link contact = new Link();
         contact.setName("+7(921) 855-0482");
-        contact.setHyperlink(URI.create("https://гиперссылка"));
+        contact.setUrl(URI.create("https://гиперссылка"));
         resume.setContact(ContactType.TEL, contact);
 
         contact = new Link();
         contact.setName("grigory.kislin");
-        contact.setHyperlink(URI.create("https://skype.com"));
+        contact.setUrl(URI.create("https://skype.com"));
         resume.setContact(ContactType.SKYPE, contact);
 
         contact = new Link();
         contact.setName("gkislin@yandex.ru");
-        contact.setHyperlink(URI.create("https://mail.yandex.ru"));
+        contact.setUrl(URI.create("https://mail.yandex.ru"));
         resume.setContact(ContactType.EMAIL, contact);
 
         // fill OBJECTIVE
@@ -40,7 +40,7 @@ public class ResumeTestData {
         strings.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 3500 выпускников");
         strings.add("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.");
         ListSection listSection = new ListSection();
-        listSection.setStrings(strings);
+        listSection.setLines(strings);
         resume.setSection(SectionType.ACHIEVEMENT, listSection);
 
         // fill QUALIFICATIONS
@@ -50,14 +50,14 @@ public class ResumeTestData {
         strings.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB");
         strings.add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
         listSection = new ListSection();
-        listSection.setStrings(strings);
+        listSection.setLines(strings);
         resume.setSection(SectionType.QUALIFICATIONS, listSection);
 
         // fill EXPERIENCE
         Company company = new Company();
         Link link = new Link();
         link.setName("Java Online Projects");
-        link.setHyperlink(URI.create("https://JOP.dns-name"));
+        link.setUrl(URI.create("https://JOP.dns-name"));
         company.setLink(link);
         Period period = new Period();
         period.setStartDate(LocalDate.of(2013, 10, 1));
@@ -76,7 +76,7 @@ public class ResumeTestData {
         company = new Company();
         link = new Link();
         link.setName("Wrike");
-        link.setHyperlink(URI.create("https://wrike.dns-name"));
+        link.setUrl(URI.create("https://wrike.dns-name"));
         company.setLink(link);
         period = new Period();
         period.setStartDate(LocalDate.of(2014, 10, 1));
@@ -93,7 +93,7 @@ public class ResumeTestData {
         company = new Company();
         link = new Link();
         link.setName("RIT Center");
-        link.setHyperlink(URI.create("https://rit-center.dns-name"));
+        link.setUrl(URI.create("https://rit-center.dns-name"));
         company.setLink(link);
         period = new Period();
         period.setStartDate(LocalDate.of(2012, 4, 1));
@@ -111,7 +111,7 @@ public class ResumeTestData {
         company = new Company();
         link = new Link();
         link.setName("Coursera");
-        link.setHyperlink(URI.create("https://coursera.dns-name"));
+        link.setUrl(URI.create("https://coursera.dns-name"));
         company.setLink(link);
         period = new Period();
         period.setStartDate(LocalDate.of(2013, 3, 1));
@@ -129,7 +129,7 @@ public class ResumeTestData {
         company = new Company();
         link = new Link();
         link.setName("Luxoft");
-        link.setHyperlink(URI.create("https://luxoft.dns-name"));
+        link.setUrl(URI.create("https://luxoft.dns-name"));
         company.setLink(link);
         period = new Period();
         period.setStartDate(LocalDate.of(2011, 3, 1));
@@ -146,7 +146,7 @@ public class ResumeTestData {
         company = new Company();
         link = new Link();
         link.setName("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики");
-        link.setHyperlink(URI.create("https://spb.university.dns-name"));
+        link.setUrl(URI.create("https://spb.university.dns-name"));
         company.setLink(link);
         period = new Period();
         period.setStartDate(LocalDate.of(1993, 9, 1));

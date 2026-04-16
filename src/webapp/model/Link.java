@@ -5,26 +5,26 @@ import java.util.Objects;
 
 public class Link {
     private String name;
-    private URI hyperlink;
+    private URI url;
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setHyperlink(URI hyperlink) {
-        this.hyperlink = hyperlink;
+    public void setUrl(URI url) {
+        this.url = url;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Link link = (Link) o;
-        return Objects.equals(name, link.name) && Objects.equals(hyperlink, link.hyperlink);
+        return Objects.equals(name, link.name) && Objects.equals(url, link.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hyperlink);
+        return Objects.hash(name, url);
     }
 
     @Override

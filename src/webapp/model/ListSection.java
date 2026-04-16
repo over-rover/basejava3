@@ -4,28 +4,28 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection {
-    private List<String> strings;
+    private List<String> lines;
 
-    public void setStrings(List<String> strings) {
-        this.strings = strings;
+    public void setLines(List<String> lines) {
+        this.lines = lines;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ListSection that = (ListSection) o;
-        return Objects.equals(strings, that.strings);
+        return Objects.equals(lines, that.lines);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(strings);
+        return Objects.hashCode(lines);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (String text : strings) {
+        for (String text : lines) {
             sb.append(text).append("\n");
         }
         return sb.toString();

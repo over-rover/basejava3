@@ -20,7 +20,7 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
         try {
             storage.clear();
             for (int i = 0; i < storageLimit; i++) {
-                storage.save(new Resume("Overflow " + i));
+                storage.save(new Resume("uuid " + i));
             }
         } catch (Exception e) {
             fail("Массив переполнен раньше времени " + e.getMessage());
