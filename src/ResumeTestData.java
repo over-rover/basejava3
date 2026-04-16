@@ -66,7 +66,7 @@ public class ResumeTestData {
         period.setDuty("Создание, организация и проведение Java онлайн проектов и стажировок.");
         List<Period> periods = new ArrayList<>();
         periods.add(period);
-        company.setPeriods(periods);
+        company.setPositions(periods);
         List<Company> companies = new ArrayList<>();
         companies.add(company);
         CompanySection companiesSection = new CompanySection();
@@ -85,7 +85,7 @@ public class ResumeTestData {
         period.setDuty("Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         periods = new ArrayList<>();
         periods.add(period);
-        company.setPeriods(periods);
+        company.setPositions(periods);
         companies.add(company);
         companiesSection.setCompanies(companies);
         resume.setSection(SectionType.EXPERIENCE, companiesSection);
@@ -102,7 +102,7 @@ public class ResumeTestData {
         period.setDuty("Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы.");
         periods = new ArrayList<>();
         periods.add(period);
-        company.setPeriods(periods);
+        company.setPositions(periods);
         companies.add(company);
         companiesSection.setCompanies(companies);
         resume.setSection(SectionType.EXPERIENCE, companiesSection);
@@ -119,7 +119,7 @@ public class ResumeTestData {
         period.setDuty("Functional Programming Principles in Scala' by Martin Odersky");
         periods = new ArrayList<>();
         periods.add(period);
-        company.setPeriods(periods);
+        company.setPositions(periods);
         companies = new ArrayList<>();
         companies.add(company);
         companiesSection = new CompanySection();
@@ -137,7 +137,7 @@ public class ResumeTestData {
         period.setDuty("Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.");
         periods = new ArrayList<>();
         periods.add(period);
-        company.setPeriods(periods);
+        company.setPositions(periods);
         companies.add(company);
         companiesSection = new CompanySection();
         companiesSection.setCompanies(companies);
@@ -159,7 +159,7 @@ public class ResumeTestData {
         period.setStopDate(LocalDate.of(1993, 7, 1));
         period.setDuty("Инженер (программист Fortran, C)");
         periods.add(period);
-        company.setPeriods(periods);
+        company.setPositions(periods);
         companies.add(company);
         companiesSection = new CompanySection();
         companiesSection.setCompanies(companies);
