@@ -1,6 +1,7 @@
 package webapp.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Period {
     private LocalDate startDate;
@@ -22,6 +23,21 @@ public class Period {
 
     public void setDuty(String duty) {
         this.duty = duty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Period period = (Period) o;
+        return Objects.equals(startDate, period.startDate) &&
+                Objects.equals(stopDate, period.stopDate) &&
+                Objects.equals(position, period.position) &&
+                Objects.equals(duty, period.duty);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startDate, stopDate, position, duty);
     }
 
     @Override
