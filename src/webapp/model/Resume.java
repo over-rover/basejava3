@@ -1,5 +1,6 @@
 package webapp.model;
 
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -8,8 +9,8 @@ import java.util.UUID;
 public class Resume implements Comparable<Resume> {
     private final String uuid;
     private final String fullName;
-    private final Map<ContactType, Link> contacts = new LinkedHashMap<>();
-    private final Map<SectionType, AbstractSection> sections = new LinkedHashMap<>();
+    private final Map<ContactType, Link> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);

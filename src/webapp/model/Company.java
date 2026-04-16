@@ -8,6 +8,8 @@ public class Company {
     private final List<Period> positions;
 
     public Company(Link link, List<Period> positions) {
+        Objects.requireNonNull(link, "link of Link must not be null");
+        Objects.requireNonNull(positions, "positions of Link must not be null");
         this.link = link;
         this.positions = positions;
     }

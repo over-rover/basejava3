@@ -7,6 +7,7 @@ public class ListSection extends AbstractSection {
     private final List<String> lines;
 
     public ListSection(List<String> lines) {
+        Objects.requireNonNull(lines, "lines of ListSection must not be null");
         this.lines = lines;
     }
 
