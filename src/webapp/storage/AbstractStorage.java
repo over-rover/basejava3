@@ -9,7 +9,7 @@ import webapp.model.Resume;
 
 public abstract class AbstractStorage<SK> implements Storage {
     protected static final Comparator<Resume> RESUME_COMPARATOR = Comparator
-            .comparing(Resume::getUuid).thenComparing(Resume::getFullName);
+            .comparing(Resume::getFullName).thenComparing(Resume::getUuid);
 
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
