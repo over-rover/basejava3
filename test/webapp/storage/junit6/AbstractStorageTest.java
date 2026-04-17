@@ -1,6 +1,8 @@
 package webapp.storage.junit6;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static webapp.ResumeTestData.createResume;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -25,10 +27,10 @@ public abstract class AbstractStorageTest {
     private final int initialSize = 3;
 
     static {
-        r1 = new Resume(UUID_1, fullName);
-        r2 = new Resume(UUID_2, fullName);
-        r3 = new Resume(UUID_3, fullName);
-        r4 = new Resume(UUID_4, fullName);
+        r1 = createResume(UUID_1, fullName);
+        r2 = createResume(UUID_2, fullName);
+        r3 = createResume(UUID_3, fullName);
+        r4 = createResume(UUID_4, fullName);
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -52,7 +54,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void saveIfExistTest() {
-        assertThrows(ExistStorageException.class, () -> storage.save(new Resume(UUID_1, fullName)));
+        assertThrows(ExistStorageException.class, () -> storage.save(createResume(UUID_1, fullName)));
     }
 
     @Test
@@ -76,7 +78,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void updateTest() {
-        Resume resume = new Resume(UUID_1,fullName);
+        Resume resume = createResume(UUID_1,fullName);
         storage.update(resume);
         assertSame(resume, storage.get(UUID_1));
     }

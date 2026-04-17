@@ -1,3 +1,5 @@
+package webapp;
+
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,8 +15,8 @@ import webapp.model.SectionType;
 import webapp.model.TextSection;
 
 public class ResumeTestData {
-    static void main() {
-        Resume resume = new Resume("uuid4", "Григорий Кислин");
+    public static Resume createResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
 
         // fill Contacts
         Link contact = new Link("+7(921) 855-0482", URI.create("https://гиперссылка"));
@@ -124,5 +126,6 @@ public class ResumeTestData {
         resume.setSection(SectionType.EDUCATION, companiesSection);
 
         System.out.println(resume);
+        return resume;
     }
 }
