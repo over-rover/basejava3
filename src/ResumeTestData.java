@@ -52,7 +52,7 @@ public class ResumeTestData {
         resume.setSection(SectionType.QUALIFICATIONS, listSection);
 
         // fill EXPERIENCE
-        Link link = new Link("Java Online Projects", URI.create("https://JOP.dns-name"));
+        Link link = new Link("Java Online Projects", null);
         Period period = new Period("Автор проекта.",
                 "Создание, организация и проведение Java онлайн проектов и стажировок.",
                 LocalDate.of(2013, 10, 1),
@@ -86,8 +86,8 @@ public class ResumeTestData {
 
         // fill EDUCATION
         link = new Link("Coursera", URI.create("https://coursera.dns-name"));
-        period = new Period("",
-                "Functional Programming Principles in Scala' by Martin Odersky",
+        period = new Period("Functional Programming Principles in Scala' by Martin Odersky",
+                null,
                 LocalDate.of(2013, 3, 1),
                 LocalDate.of(2013, 5, 1));
         positions = new ArrayList<>();
@@ -98,8 +98,8 @@ public class ResumeTestData {
         resume.setSection(SectionType.EDUCATION, companiesSection);
 
         link = new Link("Luxoft", URI.create("https://luxoft.dns-name"));
-        period = new Period("",
-                "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.",
+        period = new Period("Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.",
+                null,
                 LocalDate.of(2011, 3, 1),
                 LocalDate.of(2011, 4, 1));
         positions = new ArrayList<>();
@@ -109,14 +109,14 @@ public class ResumeTestData {
 
         link = new Link("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 URI.create("https://spb.university.dns-name"));
-        period = new Period("",
-                "Аспирантура (программист С, С++)",
+        period = new Period("Аспирантура (программист С, С++)",
+                null,
                 LocalDate.of(1993, 9, 1),
                 LocalDate.of(1996, 7, 1));
         positions = new ArrayList<>();
         positions.add(period);
-        period = new Period("",
-                "Инженер (программист Fortran, C)",
+        period = new Period("Инженер (программист Fortran, C)",
+                null,
                 LocalDate.of(1987, 9, 1),
                 LocalDate.of(1993, 7, 1));
         positions.add(period);

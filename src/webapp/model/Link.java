@@ -27,6 +27,6 @@ public class Link {
 
     @Override
     public String toString() {
-        return name;
+        return name + "\n" + Objects.toString(url, "");
     }
 }

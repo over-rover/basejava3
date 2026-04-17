@@ -39,6 +39,6 @@ public class Period {
         return startDate + "\n" +
                 stopDate + "\n" +
                 position + "\n" +
-                duty;
+                Objects.toString(duty, "");
     }
 }
