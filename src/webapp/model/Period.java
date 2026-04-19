@@ -9,10 +9,14 @@ public class Period {
     private final LocalDate startDate;
     private final LocalDate stopDate;
 
-    public Period(String position, String duty, LocalDate startDate, LocalDate stopDate) {
+    public Period(String position, LocalDate startDate, LocalDate stopDate) {
         Objects.requireNonNull(position, "position of Period must not be null");
         Objects.requireNonNull(startDate, "startDate of Period must not be null");
         Objects.requireNonNull(stopDate, "stopDate of Period must not be null");
+        this(position, null, startDate, stopDate);
+    }
+
+    public Period(String position, String duty, LocalDate startDate, LocalDate stopDate) {
         this.position = position;
         this.duty = duty;
         this.startDate = startDate;
