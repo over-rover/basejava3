@@ -8,7 +8,6 @@ public class Link {
     private final URI url;
 
     public Link(String name) {
-        Objects.requireNonNull(name, "name of Link must not be null");
         this(name, null);
     }
 
