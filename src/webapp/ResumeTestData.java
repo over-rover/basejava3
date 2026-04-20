@@ -1,7 +1,7 @@
 package webapp;
 
 import java.net.URI;
-import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import webapp.model.Company;
@@ -9,14 +9,13 @@ import webapp.model.CompanySection;
 import webapp.model.ContactType;
 import webapp.model.Link;
 import webapp.model.ListSection;
-import webapp.model.Period;
 import webapp.model.Resume;
 import webapp.model.SectionType;
 import webapp.model.TextSection;
 
 public class ResumeTestData {
     static void main() {
-        createResume("uuid3", "Григорий Кислин");
+        createResume("uuid4", "Григорий Кислин");
     }
 
     public static Resume createResume(String uuid, String fullName) {
@@ -59,69 +58,64 @@ public class ResumeTestData {
 
         // fill EXPERIENCE
         Link link = new Link("Java Online Projects");
-        Period period = new Period("Автор проекта.",
-                "Создание, организация и проведение Java онлайн проектов и стажировок.",
-                LocalDate.of(2013, 10, 1),
-                LocalDate.now());
-        List<Period> positions = new ArrayList<>();
-        positions.add(period);
+        Company.Position position = new Company.Position(2013, Month.OCTOBER,
+                "Автор проекта.",
+                "Создание, организация и проведение Java онлайн проектов и стажировок.");
+        List<Company.Position> positions = new ArrayList<>();
+        positions.add(position);
         List<Company> companies = new ArrayList<>();
         companies.add(new Company(link, positions));
         CompanySection companiesSection = new CompanySection(companies);
         resume.setSection(SectionType.EXPERIENCE, companiesSection);
 
         link = new Link("Wrike", URI.create("https://wrike.dns-name"));
-        period = new Period("Старший разработчик (backend)",
-                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.",
-                LocalDate.of(2014, 10, 1),
-                LocalDate.of(2016, 1, 1));
+        position = new Company.Position(2014, Month.OCTOBER, 2016, Month.JANUARY,
+                "Старший разработчик (backend)",
+                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         positions = new ArrayList<>();
-        positions.add(period);
+        positions.add(position);
         companies.add(new Company(link, positions));
         resume.setSection(SectionType.EXPERIENCE, companiesSection);
 
         link = new Link("RIT Center", URI.create("https://rit-center.dns-name"));
-        period = new Period("Java архитектор",
-                "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы.",
-                LocalDate.of(2012, 4, 1),
-                LocalDate.of(2014, 10, 1));
+        position = new Company.Position(2012, Month.APRIL, 2014, Month.OCTOBER,
+                "Java архитектор",
+                "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы.");
         positions = new ArrayList<>();
-        positions.add(period);
+        positions.add(position);
         companies.add(new Company(link, positions));
         resume.setSection(SectionType.EXPERIENCE, companiesSection);
 
         // fill EDUCATION
         link = new Link("Coursera", URI.create("https://coursera.dns-name"));
-        period = new Period("Functional Programming Principles in Scala' by Martin Odersky",
-                LocalDate.of(2013, 3, 1),
-                LocalDate.of(2013, 5, 1));
+        position = new Company.Position(2013, Month.MARCH, 2013, Month.MAY,
+                "Functional Programming Principles in Scala' by Martin Odersky");
         positions = new ArrayList<>();
-        positions.add(period);
+        positions.add(position);
         companies = new ArrayList<>();
         companies.add(new Company(link, positions));
         companiesSection = new CompanySection(companies);
         resume.setSection(SectionType.EDUCATION, companiesSection);
 
         link = new Link("Luxoft", URI.create("https://luxoft.dns-name"));
-        period = new Period("Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.",
-                LocalDate.of(2011, 3, 1),
-                LocalDate.of(2011, 4, 1));
+        position = new Company.Position(2011, Month.MARCH, 2011, Month.APRIL,
+                "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.");
         positions = new ArrayList<>();
-        positions.add(period);
+        positions.add(position);
         companies.add(new Company(link, positions));
         resume.setSection(SectionType.EDUCATION, companiesSection);
 
         link = new Link("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 URI.create("https://spb.university.dns-name"));
-        period = new Period("Аспирантура (программист С, С++)",
-                LocalDate.of(1993, 9, 1),
-                LocalDate.of(1996, 7, 1));
+        position = new Company.Position(1993, Month.SEPTEMBER,
+                1996, Month.JULY,
+                "Аспирантура (программист С, С++)");
         positions = new ArrayList<>();
-        positions.add(period);
-        period = new Period("Инженер (программист Fortran, C)",
-                LocalDate.of(1987, 9, 1),
-                LocalDate.of(1993, 7, 1));
-        positions.add(period);
+        positions.add(position);
+        position = new Company.Position(1987, Month.SEPTEMBER,
+                1993, Month.JULY,
+                "Инженер (программист Fortran, C)");
+        positions.add(position);
         companies.add(new Company(link, positions));
         resume.setSection(SectionType.EDUCATION, companiesSection);
 
