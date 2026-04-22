@@ -3,12 +3,16 @@ package webapp.model;
 import static webapp.util.DateUtil.NOW;
 import static webapp.util.DateUtil.of;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 
-public class Company {
+public class Company implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final Link link;
     private final List<Position> positions;
 
@@ -42,7 +46,7 @@ public class Company {
         return sb.toString();
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
         private final LocalDate startDate;
         private final LocalDate stopDate;
         private final String title;
