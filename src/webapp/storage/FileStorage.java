@@ -1,23 +1,16 @@
 package webapp.storage;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import webapp.exception.StorageException;
 import webapp.model.Resume;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private final File directory;
 
-    protected AbstractFileStorage(File directory) {
+    public FileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -106,7 +99,17 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return file.exists();
     }
 
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
+    protected void doWrite(Resume r, OutputStream os) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
+            oos.writeObject(r);
+        }
+    }
 
-    protected abstract Resume doRead(InputStream is) throws IOException;
+    protected Resume doRead(InputStream is) throws IOException {
+        try (ObjectInputStream ois = new ObjectInputStream(is)) {
+            return (Resume) ois.readObject();
+        } catch (ClassNotFoundException e) {
+            throw new StorageException("Error", "uuid", e);
+        }
+    }
 }
