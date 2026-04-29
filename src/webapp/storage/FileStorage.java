@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import webapp.exception.StorageException;
 import webapp.model.Resume;
+import webapp.storage.serializer.ObjectStreamFileSerializer;
+import webapp.storage.serializer.Serializer;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
+    private Serializer<OutputStream, InputStream> serializer;
 
     public FileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -19,6 +22,12 @@ public class FileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
         this.directory = directory;
+
+        this.serializer = new ObjectStreamFileSerializer();
+    }
+
+    public void setSerializer(Serializer<OutputStream, InputStream> serializer) {
+        this.serializer = serializer;
     }
 
     @Override
@@ -59,7 +68,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected Resume doGet(File file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file)));
+            return serializer.doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File read error", file.getName(), e);
         }
@@ -81,7 +90,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdate(Resume r, File file) {
         try {
-            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            serializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", r.getUuid(), e);
         }
@@ -97,19 +106,5 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected boolean isExist(File file) {
         return file.exists();
-    }
-
-    protected void doWrite(Resume r, OutputStream os) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
-            oos.writeObject(r);
-        }
-    }
-
-    protected Resume doRead(InputStream is) throws IOException {
-        try (ObjectInputStream ois = new ObjectInputStream(is)) {
-            return (Resume) ois.readObject();
-        } catch (ClassNotFoundException e) {
-            throw new StorageException("Error", "uuid", e);
-        }
     }
 }
