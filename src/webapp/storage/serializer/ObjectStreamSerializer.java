@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import webapp.exception.StorageException;
 import webapp.model.Resume;
 
-public class ObjectStreamFileSerializer implements Serializer<OutputStream, InputStream> {
+public class ObjectStreamSerializer implements Serializer {
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(os)) {

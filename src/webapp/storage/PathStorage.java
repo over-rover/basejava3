@@ -10,14 +10,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import webapp.exception.StorageException;
 import webapp.model.Resume;
-import webapp.storage.serializer.ObjectStreamPathSerializer;
 import webapp.storage.serializer.Serializer;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    private Serializer<Path, Path> serializer;
+    private Serializer serializer;
 
-    public PathStorage(String dir) {
+    public PathStorage(String dir, Serializer serializer) {
         Objects.requireNonNull(dir, "directory must not be null");
         directory = Paths.get(dir);
         if (!Files.isDirectory(directory)) {
@@ -26,10 +25,10 @@ public class PathStorage extends AbstractStorage<Path> {
         if (!Files.isReadable(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(directory.toAbsolutePath() + " is not readable/writable");
         }
-        this.serializer = new ObjectStreamPathSerializer();
+        this.serializer = serializer;
     }
 
-    public void setSerializer(Serializer<Path, Path> serializer) {
+    public void setSerializer(Serializer serializer) {
         this.serializer = serializer;
     }
 
@@ -70,7 +69,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return serializer.doRead(path);
+            return serializer.doRead(Files.newInputStream(path));
         } catch (IOException e) {
             throw new StorageException("File read error", path.getFileName().toString(), e);
         }
@@ -88,7 +87,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(Resume r, Path path) {
         try {
-            serializer.doWrite(r, path);
+            serializer.doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
             throw new StorageException("File write error", r.getUuid(), e);
         }

@@ -1,10 +1,12 @@
 package webapp.storage.serializer;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import webapp.model.Resume;
 
-public interface Serializer<O, I> {
-    void doWrite(Resume r, O output) throws IOException;
+public interface Serializer {
+    void doWrite(Resume r, OutputStream os) throws IOException;
 
-    Resume doRead(I input) throws IOException;
+    Resume doRead(InputStream is) throws IOException;
 }

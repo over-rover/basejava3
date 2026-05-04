@@ -6,14 +6,13 @@ import java.util.List;
 import java.util.Objects;
 import webapp.exception.StorageException;
 import webapp.model.Resume;
-import webapp.storage.serializer.ObjectStreamFileSerializer;
 import webapp.storage.serializer.Serializer;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
-    private Serializer<OutputStream, InputStream> serializer;
+    private Serializer serializer;
 
-    public FileStorage(File directory) {
+    public FileStorage(File directory, Serializer serializer) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -23,10 +22,10 @@ public class FileStorage extends AbstractStorage<File> {
         }
         this.directory = directory;
 
-        this.serializer = new ObjectStreamFileSerializer();
+        this.serializer = serializer;
     }
 
-    public void setSerializer(Serializer<OutputStream, InputStream> serializer) {
+    public void setSerializer(Serializer serializer) {
         this.serializer = serializer;
     }
 
