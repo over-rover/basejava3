@@ -33,7 +33,7 @@ public class FileStorage extends AbstractStorage<File> {
     public void clear() {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Directory does not exist", null);
+            throw new StorageException("Clear directory error");
         }
         for (File file : files) {
             doDelete(file);
@@ -44,7 +44,7 @@ public class FileStorage extends AbstractStorage<File> {
     public int size() {
         String[] list = directory.list();
         if (list == null) {
-            throw new StorageException("Directory read error", null);
+            throw new StorageException("Directory is not found");
         }
         return list.length;
     }
@@ -59,7 +59,7 @@ public class FileStorage extends AbstractStorage<File> {
         try {
             file.createNewFile();
         } catch (IOException e) {
-            throw new StorageException("Couldn't create file " + file.getAbsolutePath(), file.getName(), e);
+            throw new StorageException("Create file error " + file.getAbsolutePath(), file.getName(), e);
         }
         doUpdate(r, file);
     }
@@ -69,7 +69,7 @@ public class FileStorage extends AbstractStorage<File> {
         try {
             return serializer.doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("File read error", file.getName(), e);
+            throw new StorageException("Read file error", file.getName(), e);
         }
     }
 
@@ -77,7 +77,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected List<Resume> getListStorage() {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Directory read error", null);
+            throw new StorageException("Directory is not found");
         }
         List<Resume> resumes = new ArrayList<>(files.length);
         for (File file : files) {
@@ -91,14 +91,14 @@ public class FileStorage extends AbstractStorage<File> {
         try {
             serializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("IO error", r.getUuid(), e);
+            throw new StorageException("Write file error", r.getUuid(), e);
         }
     }
 
     @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
-            throw new StorageException("File delete error", file.getName());
+            throw new StorageException("Delete file error", file.getName());
         }
     }
 
