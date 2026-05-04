@@ -1,7 +1,7 @@
 package webapp.storage.junit6;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static webapp.ResumeTestData.createResume;
+import static webapp.util.ResumeTestData.createResume;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
