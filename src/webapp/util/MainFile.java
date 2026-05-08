@@ -2,35 +2,40 @@ package webapp.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
 
 public class MainFile {
-    public static final StringBuilder INDENT = new StringBuilder();
+    public static final Comparator<File> FILE_COMPARATOR = MainFile::doCompare;
 
     public static void main(String[] args) {
-        String filePath = "src";
-        File file = new File(filePath);
-        try {
-            System.out.println(file.getCanonicalPath());
-            System.out.println(file.getAbsolutePath());
-        } catch (IOException e) {
-            throw new RuntimeException("Error", e);
-        }
-
         File dir = new File("src");
         System.out.println(dir.getName());
-        recurseWalk(dir);
+        recurseWalk(dir, "");
     }
 
-    public static void recurseWalk(File obj) {
-        if (obj.isFile()) return;
+    private static void recurseWalk(File obj, String offset) {
+        Objects.requireNonNull(obj);
         File[] objects = obj.listFiles();
-        if (objects != null) {
-            INDENT.append(" ");
-            for (File element : objects) {
-                System.out.println(INDENT + element.getName());
-                recurseWalk(element);
+        Arrays.sort(objects, FILE_COMPARATOR);
+        for (File element : objects) {
+            if (element.isFile()) {
+                String fileOffset = offset.substring(0, offset.length() - 2) + "|   ";
+                System.out.println(fileOffset + element.getName());
+            } else {
+                System.out.println(offset + "|_" + element.getName());
+                recurseWalk(element, offset + "  ");
             }
-            INDENT.deleteCharAt(INDENT.length() - 1);
         }
+    }
+
+    private static int doCompare(File o1, File o2) {
+        if (o1.isDirectory() && o2.isFile()) {
+            return 1;
+        } else if (o1.isFile() && o2.isDirectory()) {
+            return -1;
+        }
+        return o1.compareTo(o2);
     }
 }
