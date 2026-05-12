@@ -3,6 +3,11 @@ package webapp.model;
 import static webapp.util.DateUtil.NOW;
 import static webapp.util.DateUtil.of;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import webapp.util.LocalDateAdapter;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,11 +15,15 @@ import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Company implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final Link link;
-    private final List<Position> positions;
+    private Link link;
+    private List<Position> positions;
+
+    public Company() {
+    }
 
     public Company(Link link, List<Position> positions) {
         Objects.requireNonNull(link, "link of Link must not be null");
@@ -46,11 +55,17 @@ public class Company implements Serializable {
         return sb.toString();
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
-        private final LocalDate startDate;
-        private final LocalDate stopDate;
-        private final String title;
-        private final String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate stopDate;
+        private String title;
+        private String description;
+
+        public Position() {
+        }
 
         public Position(int startYear, Month startMonth, String title) {
             this(of(startYear, startMonth), NOW, title, null);

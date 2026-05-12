@@ -7,7 +7,10 @@ import java.util.Objects;
 public class ListSection extends AbstractSection {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final List<String> lines;
+    private List<String> lines;
+
+    public ListSection() {
+    }
 
     public ListSection(List<String> lines) {
         Objects.requireNonNull(lines, "lines of ListSection must not be null");
