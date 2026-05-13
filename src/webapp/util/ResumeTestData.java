@@ -22,7 +22,7 @@ public class ResumeTestData {
         Resume resume = new Resume(uuid, fullName);
 
         // fill Contacts
-        Link contact = new Link("+7(921) 855-0482", URI.create("https://гиперссылка"));
+        Link contact = new Link("+7(921) 855-0482", URI.create("https://telephone"));
         resume.setContact(ContactType.TEL, contact);
 
         contact = new Link("grigory.kislin", URI.create("https://skype.com"));
