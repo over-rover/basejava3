@@ -17,6 +17,10 @@ public class ListSection extends AbstractSection {
         this.lines = lines;
     }
 
+    public List<String> getLines() {
+        return lines;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

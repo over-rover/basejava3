@@ -7,7 +7,6 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import webapp.util.LocalDateAdapter;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,6 +29,14 @@ public class Company implements Serializable {
         Objects.requireNonNull(positions, "positions of Link must not be null");
         this.link = link;
         this.positions = positions;
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
     }
 
     @Override
@@ -91,6 +98,22 @@ public class Company implements Serializable {
             this.stopDate = stopDate;
             this.title = title;
             this.description = description;
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getStopDate() {
+            return stopDate;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
         }
 
         @Override

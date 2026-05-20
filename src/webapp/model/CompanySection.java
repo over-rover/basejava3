@@ -17,6 +17,10 @@ public class CompanySection extends AbstractSection {
         this.companies = companies;
     }
 
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
