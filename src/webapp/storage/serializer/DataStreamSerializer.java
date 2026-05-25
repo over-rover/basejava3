@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +19,7 @@ import webapp.model.ListSection;
 import webapp.model.Resume;
 import webapp.model.SectionType;
 import webapp.model.TextSection;
+import webapp.util.DateUtil;
 
 public class DataStreamSerializer implements Serializer {
     private static final String NULL_VALUE = "null";
@@ -62,9 +62,7 @@ public class DataStreamSerializer implements Serializer {
     private void writeContacts(Map<ContactType, Link> contacts, DataOutputStream dos) throws IOException {
         for (Map.Entry<ContactType, Link> entry : contacts.entrySet()) {
             dos.writeUTF(entry.getKey().name());
-            dos.writeUTF(entry.getValue().getName());
-            URI url = entry.getValue().getUrl();
-            dos.writeUTF(asString(url));
+            writeLink(entry.getValue(), dos);
         }
     }
 
@@ -114,8 +112,10 @@ public class DataStreamSerializer implements Serializer {
 
     private void writePosition(Company company, DataOutputStream dos) throws IOException {
         for (Company.Position position : company.getPositions()) {
-            dos.writeUTF(position.getStartDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-            dos.writeUTF(position.getStopDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+            dos.writeInt(position.getStartDate().getYear());
+            dos.writeInt(position.getStartDate().getMonthValue());
+            dos.writeInt(position.getStopDate().getYear());
+            dos.writeInt(position.getStopDate().getMonthValue());
             dos.writeUTF(position.getTitle());
             dos.writeUTF(position.getDescription() == null ? NULL_VALUE : position.getDescription());
         }
@@ -157,8 +157,8 @@ public class DataStreamSerializer implements Serializer {
         int quantity = dis.readInt();
         List<Company.Position> positions = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
-            LocalDate startDate = LocalDate.parse(dis.readUTF(), DateTimeFormatter.ISO_LOCAL_DATE);
-            LocalDate stopDate = LocalDate.parse(dis.readUTF(), DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate startDate = DateUtil.of(dis.readInt(), dis.readInt());
+            LocalDate stopDate = DateUtil.of(dis.readInt(), dis.readInt());
             String title = dis.readUTF();
             String description = dis.readUTF();
             description = description.equals(NULL_VALUE) ? null : description;
