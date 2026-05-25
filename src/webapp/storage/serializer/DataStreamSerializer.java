@@ -22,7 +22,7 @@ import webapp.model.SectionType;
 import webapp.model.TextSection;
 
 public class DataStreamSerializer implements Serializer {
-    private final String nullValue = "null";
+    private static final String NULL_VALUE = "null";
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
@@ -47,14 +47,11 @@ public class DataStreamSerializer implements Serializer {
             int sections = dis.readInt();
             for (int i = 0; i < sections; i++) {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                String sectionName = dis.readUTF();
                 int sectionSize = dis.readInt();
-                AbstractSection section = switch (sectionName) {
-                    case "TextSection" -> readText(dis);
-                    case "ListSection" -> readLines(dis, sectionSize);
-                    case "CompanySection" -> readCompanies(dis, sectionSize);
-                    default -> throw new IllegalStateException("Error: add case " + sectionName +
-                            " in switch expression");
+                AbstractSection section = switch (sectionType) {
+                    case PERSONAL, OBJECTIVE -> readText(dis);
+                    case ACHIEVEMENT, QUALIFICATIONS -> readLines(dis, sectionSize);
+                    case EXPERIENCE, EDUCATION -> readCompanies(dis, sectionSize);
                 };
                 resume.setSection(sectionType, section);
             }
@@ -78,18 +75,13 @@ public class DataStreamSerializer implements Serializer {
             String sectionType = entry.getKey().name();
             dos.writeUTF(sectionType);
             AbstractSection section = entry.getValue();
-            dos.writeUTF(section.getClass().getSimpleName());
-            writeSection(section, dos);
-        }
-    }
-
-    private void writeSection(AbstractSection section, DataOutputStream dos) throws IOException {
-        switch (section) {
-            case TextSection textSection -> writeText(textSection, dos);
-            case ListSection listSection -> writeLines(listSection, dos);
-            case CompanySection companySection -> writeCompanies(companySection, dos);
-            default -> throw new IllegalStateException("Error: add case " + section +
-                    " in switch expression");
+            switch (entry.getKey()) {
+                case PERSONAL, OBJECTIVE -> writeText((TextSection) section, dos);
+                case ACHIEVEMENT, QUALIFICATIONS -> writeLines((ListSection) section, dos);
+                case EXPERIENCE, EDUCATION -> writeCompanies((CompanySection) section, dos);
+                default -> throw new IllegalStateException("Error: add case " + section +
+                        " in switch expression");
+            }
         }
     }
 
@@ -108,15 +100,15 @@ public class DataStreamSerializer implements Serializer {
     private void writeCompanies(CompanySection companySection, DataOutputStream dos) throws IOException {
         dos.writeInt(companySection.getCompanies().size());
         for (Company company : companySection.getCompanies()) {
-            writeLink(company, dos);
+            writeLink(company.getLink(), dos);
             dos.writeInt(company.getPositions().size());
             writePosition(company, dos);
         }
     }
 
-    private void writeLink(Company company, DataOutputStream dos) throws IOException {
-        dos.writeUTF(company.getLink().getName());
-        URI url = company.getLink().getUrl();
+    private void writeLink(Link link, DataOutputStream dos) throws IOException {
+        dos.writeUTF(link.getName());
+        URI url = link.getUrl();
         dos.writeUTF(asString(url));
     }
 
@@ -125,7 +117,7 @@ public class DataStreamSerializer implements Serializer {
             dos.writeUTF(position.getStartDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
             dos.writeUTF(position.getStopDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
             dos.writeUTF(position.getTitle());
-            dos.writeUTF(position.getDescription() == null ? nullValue : position.getDescription());
+            dos.writeUTF(position.getDescription() == null ? NULL_VALUE : position.getDescription());
         }
     }
 
@@ -169,17 +161,17 @@ public class DataStreamSerializer implements Serializer {
             LocalDate stopDate = LocalDate.parse(dis.readUTF(), DateTimeFormatter.ISO_LOCAL_DATE);
             String title = dis.readUTF();
             String description = dis.readUTF();
-            description = description.equals(nullValue) ? null : description;
+            description = description.equals(NULL_VALUE) ? null : description;
             positions.add(new Company.Position(startDate, stopDate, title, description));
         }
         return positions;
     }
 
     private URI asUrl(String url) {
-        return url.equals(nullValue) ? null : URI.create(url);
+        return url.equals(NULL_VALUE) ? null : URI.create(url);
     }
 
     private String asString(URI url) {
-        return url == null ? nullValue : url.toString();
+        return url == null ? NULL_VALUE : url.toString();
     }
 }
