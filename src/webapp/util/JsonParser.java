@@ -7,8 +7,8 @@ import java.io.Writer;
 import webapp.model.AbstractSection;
 
 public class JsonParser {
-    private static Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(AbstractSection.class, new JsonSectionAdapter())
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(AbstractSection.class, new JsonSectionAdapter<>())
             .create();
 
     public static <T> T read(Reader reader, Class<T> clazz) {

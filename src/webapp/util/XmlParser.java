@@ -6,12 +6,13 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.Reader;
 import java.io.Writer;
+import webapp.model.Resume;
 
 public class XmlParser {
     private final Marshaller marshaller;
     private final Unmarshaller unmarshaller;
 
-    public XmlParser(Class... classesToBeBound) {
+    public XmlParser(Class<?>... classesToBeBound) {
         try {
             JAXBContext ctx = JAXBContext.newInstance(classesToBeBound);
             marshaller = ctx.createMarshaller();
@@ -24,9 +25,9 @@ public class XmlParser {
         }
     }
 
-    public <T> T unmarshall(Reader reader) {
+    public Resume unmarshall(Reader reader) {
         try {
-            return (T) unmarshaller.unmarshal(reader);
+            return (Resume) unmarshaller.unmarshal(reader);
         } catch (JAXBException e) {
             throw new IllegalStateException("Java is not in an appropriate state for unmarshall from XML", e);
         }

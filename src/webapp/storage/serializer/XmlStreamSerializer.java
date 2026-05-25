@@ -8,8 +8,6 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-
-import webapp.exception.StorageException;
 import webapp.model.Company;
 import webapp.model.CompanySection;
 import webapp.model.Link;
@@ -19,7 +17,7 @@ import webapp.model.TextSection;
 import webapp.util.XmlParser;
 
 public class XmlStreamSerializer implements Serializer {
-    private XmlParser xmlParser;
+    private final XmlParser xmlParser;
 
     public XmlStreamSerializer() {
         xmlParser = new XmlParser(Resume.class, Link.class, Company.class, Company.Position.class,
