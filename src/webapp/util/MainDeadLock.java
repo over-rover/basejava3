@@ -1,40 +1,31 @@
 package webapp.util;
 
 public class MainDeadLock {
-    private static final Object OBJ_1 = new Object();
-    private static final Object OBJ_2 = new Object();
+    private static final String RES_1 = "resource 1";
+    private static final String RES_2 = "resource 2";
 
     static void main(String[] args) {
-        new Thread(() -> {
-            synchronized (OBJ_1) {
-                System.out.println(Thread.currentThread().getName() + " захватил obj1");
+        new Thread(() -> checkResources(RES_1, RES_2)).start();
+        new Thread(() -> checkResources(RES_2, RES_1)).start();
+    }
 
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+    private static void checkResources(String res1, String res2) {
+        synchronized (res1) {
+            printInfo(res1);
 
-                synchronized (OBJ_2) {
-                    System.out.println(Thread.currentThread().getName() + " захватил obj2");
-                }
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        }).start();
 
-        new Thread(() -> {
-            synchronized (OBJ_2) {
-                System.out.println(Thread.currentThread().getName() + " захватил obj2");
-
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                synchronized (OBJ_1) {
-                    System.out.println(Thread.currentThread().getName() + " захватил obj1");
-                }
+            synchronized (res2) {
+                printInfo(res2);
             }
-        }).start();
+        }
+    }
+
+    private static void printInfo(String res) {
+        System.out.println(Thread.currentThread().getName() + " захватил " + res);
     }
 }
