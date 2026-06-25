@@ -1,9 +1,5 @@
 package webapp.util;
 
-import java.net.URI;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 import webapp.model.Company;
 import webapp.model.CompanySection;
 import webapp.model.ContactType;
@@ -13,9 +9,18 @@ import webapp.model.Resume;
 import webapp.model.SectionType;
 import webapp.model.TextSection;
 
+import java.net.URI;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ResumeTestData {
     static void main() {
         createResume("uuid4", "Григорий Кислин");
+    }
+
+    public static Resume initializeResume(String uuid, String fullName) {
+        return new Resume(uuid, fullName);
     }
 
     public static Resume createResume(String uuid, String fullName) {
