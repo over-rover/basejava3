@@ -1,20 +1,22 @@
 package webapp.storage.junit6;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static webapp.util.ResumeTestData.createResume;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
-import java.util.List;
+import webapp.Config;
 import webapp.exception.ExistStorageException;
 import webapp.exception.NotExistStorageException;
 import webapp.model.Resume;
 import webapp.storage.Storage;
 
+import java.io.File;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static webapp.util.ResumeTestData.createResume;
+
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("storage");
+    //protected static final File STORAGE_DIR = new File("storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected final Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
